@@ -15,15 +15,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: Setup MSBuild path
-        uses: microsoft/setup-msbuild@v1.0.2
-
-      - name: Setup NuGet
-        uses: NuGet/setup-nuget@v1.0.5
-
-      - name: Restore NuGet packages
-        run: nuget restore
+      - task: NodeTool@0
+        displayName: 'Use Node 16.x'
+        inputs:
+          versionSpec: 16.x
 
       - name: Publish to folder
         run: msbuild /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="\published\"
